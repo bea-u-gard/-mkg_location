@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MKG_Location | Déconnexion</title>
+    <style>
+        :root {
+            --main-color: #fe5b3d;
+            --second-color: #ffac38;
+            --text-color: #444;
+            --gradient: linear-gradient(#fe5b3d, #ffac38);
+        }
+    
+        /* Styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: 'Arial', sans-serif;
+            position: relative; /* Pour pouvoir positionner l'overlay */
+            background-image: url("{% static 'images/car2.jpg' %}"); /* L'image de fond */
+            background-size: cover; /* Couvrir toute la page */
+            background-position: center center; /* Centrer l'image */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: var(--text-color); /* Utilisation de la couleur de texte définie */
+            padding: 20px;
+        }
+    
+        /* Superposition sombre */
+        body::before {
+            content: ''; /* Nécessaire pour l'affichage */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Superposition noire avec une opacité de 50% */
+            z-index: -1; /* Placer l'overlay derrière le contenu */
+        }
+    
+        h1 {
+            color: var(--main-color); /* Utilisation de la couleur principale */
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    
+        p {
+            font-size: 1.2em;
+            text-align: center;
+            color: var(--text-color); /* Utilisation de la couleur de texte définie */
+        }
+    
+        a {
+            color: var(--second-color); /* Utilisation de la couleur secondaire */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+    
+        a:hover {
+            color: var(--main-color); /* Couleur principale au survol */
+        }
+    
+        /* Responsivité */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+    
+            p {
+                font-size: 1.1em;
+            }
+    
+            a {
+                font-size: 1.1em;
+            }
+        }
+    
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8em;
+            }
+    
+            p {
+                font-size: 1em;
+            }
+    
+            a {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Vous êtes déconnecté.</h1>
+    <p><a href="{% url 'login' %}">Cliquez ici pour vous reconnecter</a></p>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="fr">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> MKG_Location | Connexion </title>
+    <style>
+        :root {
+            --main-color: #fe5b3d;
+            --second-color: #ffac38;
+            --text-color: #444;
+            --gradient: linear-gradient(#fe5b3d, #ffac38);
+        }
+        
+        /* Styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            position: relative;
+            background-image: url("{% static 'images/car2.jpg' %}");
+            background-size: cover;
+            background-position: center center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: var(--text-color);
+            padding: 20px;
+        }
+        
+        /* Superposition sombre */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+        
+        h2 {
+            color: var(--main-color);
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* Formulaire */
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+        
+        /* Conteneur pour le champ mot de passe et l'icône */
+        /* Conteneur du champ de mot de passe */
+        .password-container {
+            position: relative;
+            display: flex;
+            align-items: center; /* Centrer verticalement */
+            width: 100%;
+        }
+
+        /* Champ de mot de passe */
+        .password-container input {
+            width: 100%;
+            padding: 12px;
+            padding-right: 40px; /* Laisser de la place pour l'icône */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+
+        /* Icône de l'œil */
+        .password-container span {
+            position: absolute;
+            right: 10px;
+            top: 35%; /* Ajuste la position verticale */
+            transform: translateY(-50%); /* Centre légèrement par rapport à la hauteur */
+            cursor: pointer;
+            font-size: 1.2em;
+            color: var(--text-color);
+        }
+        
+
+        
+        input[type="password"],
+        input[type="text"] { /* Gestion du switch password/text */
+            width: 100%;
+            padding: 12px 40px 12px 12px; /* Espace pour l'icône à droite */
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+            color: var(--text-color);
+        }
+        
+        /* Style de l'icône de l'œil */
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.2em;
+            color: var(--text-color);
+            transition: 0.3s;
+        }
+        
+        .toggle-password:hover {
+            color: var(--main-color);
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background: var(--second-color);
+        }
+        
+        /* Responsivité */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 1.8em;
+            }
+        
+            form {
+                padding: 15px;
+            }
+        
+            input[type="password"],
+            input[type="text"] {
+                padding: 10px 40px 10px 10px;
+            }
+        
+            button {
+                padding: 10px;
+                font-size: 1em;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.5em;
+            }
+        
+            input[type="password"],
+            input[type="text"] {
+                padding: 8px 35px 8px 8px;
+            }
+        
+            button {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+        
+            .toggle-password {
+                font-size: 1em;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <h2>Connexion</h2>
+    {% comment %} <form method="post">
+        {% csrf_token %}
+        <label for="password">Mot de passe :</label>
+        <input type="password" name="password" id="password" required>
+        <br>
+        <button type="submit">Se connecter</button>
+    </form> {% endcomment %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="password">Mot de passe :</label>
+        <div class="password-container">
+            <input type="password" name="password" id="password" required>
+            <span id="togglePassword">👁️</span>
+        </div>
+        <br>
+        <button type="submit">Se connecter</button>
+    </form>
+    
+
+    <script>
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            var passwordField = document.getElementById("password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        });
+    </script>
+    
+</body>
+</html>
+
+
+

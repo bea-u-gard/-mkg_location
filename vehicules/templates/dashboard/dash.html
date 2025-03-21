@@ -1,0 +1,307 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MKG_Location| Tableau de bord</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome pour les icônes -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- CSS personnalisé -->
+    <link rel="stylesheet" href="css/dash.css">
+    <style>
+        :root {
+            --main-color: #fe5b3d;
+            --second-color: #ffac38;
+            --text-color: #444;
+            --gradient: linear-gradient(#fe5b3d, #ffac38);
+        }
+    
+        /* Styles généraux */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 80px; /* Espace pour l'en-tête fixe */
+            color: var(--text-color); /* Utilisation de la couleur de texte définie */
+        }
+    
+        /* Styles pour l'en-tête */
+        header {
+            background: var(--gradient); /* Utilisation du dégradé */
+            border-bottom: 3px solid var(--second-color); /* Bordure avec la couleur secondaire */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+    
+        header h1 {
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.5rem; /* Taille de police ajustée */
+        }
+    
+        header .btn-outline-light {
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    
+        header .btn-outline-light:hover {
+            background-color: #ffffff;
+            color: var(--main-color); /* Couleur principale au survol */
+        }
+    
+        header img {
+            filter: brightness(0) invert(1); /* Rend le logo blanc */
+            height: 40px;
+        }
+    
+        /* Styles pour les cartes */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    
+        .card-body {
+            padding: 2rem;
+        }
+    
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--main-color); /* Couleur principale pour les titres */
+        }
+    
+        .card-text {
+            font-size: 0.9rem;
+            color: var(--text-color); /* Couleur de texte définie */
+            margin-bottom: 1.5rem;
+        }
+    
+        .btn {
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    
+        .btn-primary {
+            background: var(--main-color);
+            border: none;
+        }
+    
+        .btn-primary:hover {
+            background: var(--second-color);
+            transform: translateY(-2px);
+        }
+    
+        .btn-success {
+            background: var(--second-color);
+            border: none;
+        }
+    
+        .btn-success:hover {
+            background: var(--main-color);
+            transform: translateY(-2px);
+        }
+    
+        .btn-warning {
+            background: var(--main-color);
+            border: none;
+        }
+    
+        .btn-warning:hover {
+            background: var(--second-color);
+            transform: translateY(-2px);
+        }
+    
+        .btn-info {
+            background: var(--second-color);
+            border: none;
+        }
+    
+        .btn-info:hover {
+            background: var(--main-color);
+            transform: translateY(-2px);
+        }
+    
+        .btn-danger {
+            background: var(--main-color);
+            border: none;
+        }
+    
+        .btn-danger:hover {
+            background: var(--second-color);
+            transform: translateY(-2px);
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.2rem; /* Taille de police réduite pour les petits écrans */
+            }
+    
+            header img {
+                height: 30px; /* Logo plus petit sur mobile */
+            }
+    
+            .card-body {
+                padding: 1.5rem;
+            }
+    
+            .card-title {
+                font-size: 1.1rem;
+            }
+    
+            .card-text {
+                font-size: 0.8rem;
+            }
+    
+            .btn {
+                font-size: 0.8rem;
+            }
+        }
+    
+        @media (max-width: 576px) {
+            header h1 {
+                font-size: 1rem; /* Taille de police encore plus petite pour les très petits écrans */
+            }
+    
+            header .btn-outline-light {
+                padding: 0.25rem 0.5rem; /* Bouton plus compact */
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête -->
+    <header class="bg-dark text-white py-3 shadow-sm">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Logo et titre -->
+                <div class="d-flex align-items-center">
+                    <img src="{% static 'images/logomkg.png' %}" alt="Logo MKG" class="me-3">
+                    {% comment %} <h1 class="h4 mb-0">MKG_Location</h1> {% endcomment %}
+                </div>
+
+                <!-- Bouton de déconnexion -->
+                <a href="{% url 'logout' %}" class="btn btn-outline-light">
+                    <i class="fas fa-sign-out-alt me-2"></i> Déconnexion
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- Carte 1 : Gérer les Voitures -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-car fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title">Gérer les Voitures</h3>
+                        <p class="card-text">Ajoutez, modifiez ou supprimez des voitures.</p>
+                        <a href="{% url 'liste_voitures' %}" class="btn btn-primary">
+                            <i class="fas fa-eye"></i> Voir les Voitures
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 2 : Gérer les Réservations -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-calendar-check fa-3x text-success mb-3"></i>
+                        <h3 class="card-title">Gérer les Réservations</h3>
+                        <p class="card-text">Consultez et gérez les réservations.</p>
+                        <a href="{% url 'liste_reservations' %}" class="btn btn-success">
+                            <i class="fas fa-eye"></i> Voir les Réservations
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 3 : Gérer les Offres -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-tags fa-3x text-warning mb-3"></i>
+                        <h3 class="card-title">Gérer les Offres</h3>
+                        <p class="card-text">Gérez les offres spéciales.</p>
+                        <a href="{% url 'liste_offres' %}" class="btn btn-warning">
+                            <i class="fas fa-eye"></i> Voir les Offres
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 4 : Gérer les Témoignages -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-comments fa-3x text-info mb-3"></i>
+                        <h3 class="card-title">Gérer les Témoignages</h3>
+                        <p class="card-text">Consultez et gérez les témoignages des clients.</p>
+                        <a href="{% url 'liste_temoignages' %}" class="btn btn-info">
+                            <i class="fas fa-eye"></i> Voir les Témoignages
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte 5 : Gérer les Abonnés à la Newsletter -->
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-envelope fa-3x text-danger mb-3"></i>
+                        <h3 class="card-title">Gérer les Abonnés</h3>
+                        <p class="card-text">Consultez et gérez les abonnés à la newsletter.</p>
+                        <a href="{% url 'liste_abonnes' %}" class="btn btn-danger">
+                            <i class="fas fa-eye"></i> Voir les Abonnés
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <!-- Icône pour les affiches publicitaires -->
+                        <i class="fas fa-ad fa-3x text-primary mb-3"></i>
+                        <!-- Titre de la carte -->
+                        <h3 class="card-title">Affiches Publicitaires</h3>
+                        <!-- Description de la carte -->
+                        <p class="card-text">Consultez et gérez les affiches publicitaires.</p>
+                        <!-- Bouton pour accéder à la gestion des affiches -->
+                        <a href="{% url 'liste_affiches' %}" class="btn btn-primary">
+                            <i class="fas fa-eye"></i> Voir les Affiches
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optionnel, si vous avez besoin de fonctionnalités JS de Bootstrap) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

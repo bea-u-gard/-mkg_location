@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MKG Location | base </title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="../img/logomkg.png" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header class="section">
+        <div class="menu_toggle">
+            <span></span>
+        </div>
+        <a href="#" class="logo"><img src="../img/logomkg.png" alt="Logo"></a>
+        <div class="navbar-container">
+            <ul class="navbar">
+                <li><a href="#home">Accueil</a></li>
+                <li><a href="#reserve">Réservation</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#offre">Nos Offres</a></li>
+                <li><a href="#reviews">Témoignages</a></li>
+            </ul>
+        </div>
+    </header>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+    <footer class="footer">
+        <div class="footer-container">
+            <!-- Section À propos -->
+            <div class="footer-section">
+                <h3>À propos de MKG Location</h3>
+                <p>MKG Location est une agence de location de voitures de confiance, offrant des véhicules de qualité pour tous vos besoins de déplacement. Découvrez notre flotte et réservez dès aujourd'hui !</p>
+            </div>
+    
+            <!-- Liens rapides -->
+            <div class="footer-section">
+                <h3>Liens rapides</h3>
+                <ul>
+                    <li><a href="#home">Accueil</a></li>
+                    <li><a href="#ride">Nos véhicules</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#reviews">Avis clients</a></li>
+                </ul>
+            </div>
+    
+            <!-- Coordonnées -->
+            <div class="footer-section">
+                <h3>Contactez-nous</h3>
+                <ul>
+                    <li><i class='bx bx-map'></i> 123 Rue de la Location, Paris, France</li>
+                    <li><a href="https://wa.me/22891827950" target="_blank"><i class='bx bx-phone'></i> +228 91 82 79 50</a></li>
+                    <li><a href="https://wa.me/22870018340" target="_blank"><i class='bx bx-phone'></i> +228 70 01 83 40</a></li>
+                    <li><i class='bx bx-envelope'></i> mkglocation524@gmail.com</li>
+                </ul>
+            </div>
+    
+            <!-- Réseaux sociaux -->
+            <div class="footer-section">
+                <h3>Suivez-nous</h3>
+                <div class="social-icons">
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-instagram'></i></a>
+                    <a href="#"><i class='bx bxl-twitter'></i></a>
+                    <a href="#"><i class='bx bxl-youtube'></i></a>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Copyright -->
+        <div class="copyright">
+            <p>&copy; 2023 MKG Location. Tous droits réservés.</p>
+        </div>
+    </footer>
+   <script src="{% static 'js/base.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,624 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MKG Location | Location de Véhicules – Simplicité & Confort</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="icon" href="img/logomkg.png" type="image/x-icon">
+
+    <!-- lien css -->
+     <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+     <!-- lien bonx icon -->
+     <link rel="stylesheet"
+     href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+</head>
+<body>
+    <!-- Header  -->
+    <header class="section">
+        <div class="menu_toggle">
+            <span></span>
+        </div>
+        <a href="#" class="logo">
+            <img src="{% static 'images/logomkg.png' %}" alt="Logo MKG">
+        </a>
+        <div class="navbar-container">
+            <ul class="navbar">
+                <li><a href="#home">Acceuil</a></li>
+                <li><a href="#reserve">Réservation</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">A propos</a></li>
+                <li><a href="#offre">Nos Offres</a></li>
+                <li><a href="#reviews">Temoignages</a></li>
+            </ul>
+            <!-- <div class="header-btn">
+                <a href="#" class="sign-up">Sign Up</a>
+                <a href="#" class="sign-in">Sign In</a>
+            </div> -->
+        </div>
+    </header>
+    <!-- Home -->
+     
+    <section class="home" id="home">
+        <div class="container">
+            <!-- Carrousel d'images promotionnelles -->
+            <div class="slider">
+                <!-- Flèches de navigation -->
+                <button class="slider-arrow left-arrow" onclick="prevSlide()">&#10094;</button>
+                <button class="slider-arrow right-arrow" onclick="nextSlide()">&#10095;</button>
+        
+                <!-- Boucle pour afficher les slides dynamiquement -->
+                {% for slide in slides %}
+                <div class="slide {% if forloop.first %}active{% endif %}">
+                    <img src="{{ slide.image.url }}" alt="{{ slide.title }}" onclick="openModal('{{ slide.image.url }}', '{{ slide.title }}', '{{ slide.description }}')">
+                    <div class="slide-text">
+                        <h2>{{ slide.title }}</h2>
+                        <p>{{ slide.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        
+            <!-- Section principale -->
+            <div class="hero-content">
+                <h1><span>Bienvenue</span> sur MKG LOCATION</h1>
+                <p class="tagline">Nous offrons un large choix de véhicules à des prix compétitifs. Réservez dès maintenant votre voiture en toute simplicité.</p>
+                <!-- Bouton Réserver -->
+                <a href="#services" class="reserve-btn">Réserver votre place maintenant</a>
+            </div>
+        </div>
+        
+        <!-- Modal pour afficher l'image en grand -->
+        <div id="imageModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal()">&times;</span>
+                <img id="modalImage" src="" alt="Image en grand">
+                <div class="modal-text">
+                    <h2 id="modalTitle"></h2>
+                    <p id="modalDescription"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<style>
+    .home {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-color);
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        margin-top: 2%;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    /* Styles pour le slider */
+    .slider {
+        position: relative;
+        width: 100%;
+        height: 60vh; /* Ajustez la hauteur selon vos besoins */
+        overflow: hidden;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+    
+    .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+    
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+    }
+    
+    .slide-text {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        font-weight: 900;
+        color: rgb(0, 0, 0);
+        background: white;
+        padding: 1rem;
+        border-radius: 5px;
+    }
+    
+    .slide-text h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .slide-text p {
+        font-size: 1rem;
+    }
+    
+    .slide.active {
+        opacity: 1;
+    }
+    
+    /* Flèches de navigation */
+    .slider-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 1.5rem;
+        z-index: 10;
+    }
+    
+    .left-arrow {
+        left: 10px;
+    }
+    
+    .right-arrow {
+        right: 10px;
+    }
+    
+    /* Bouton Réserver */
+    .reserve-btn {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary-color);
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+    }
+    
+    .reserve-btn:hover {
+        background-color: var(--second-color) ;
+    }
+    
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 90%;
+        max-height: 90%;
+        overflow: auto;
+        text-align: center;
+        position: relative;
+    }
+    
+    .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    
+    .modal-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+    
+    .modal-text {
+        margin-top: 1rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+    
+        .slider {
+            height: 50vh;
+        }
+    
+        .slide img {
+            height: 100%;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .hero-content h1 {
+            font-size: 1.5rem;
+        }
+    
+        .slider {
+            height: 40vh;
+        }
+    
+        .slide-text {
+            bottom: 10px;
+            left: 10px;
+            padding: 0.5rem;
+        }
+    
+        .slide-text h2 {
+            font-size: 1.2rem;
+        }
+    
+        .slide-text p {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+    <script>
+                let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Défilement automatique toutes les 5 secondes
+        setInterval(nextSlide, 5000);
+
+        // Afficher la première slide au chargement de la page
+        showSlide(currentSlide);
+
+        // Modal
+        function openModal(imageSrc, title, description) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+
+            modalImage.src = imageSrc;
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+
+        // Fermer la modal en cliquant à l'extérieur
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+
+
+
+    <!-- Reservation -->
+    <section class="reserve" id="reserve">
+        <div class="heading">
+            <span>Réservation rapide et facile</span>
+            <h1>Louez votre voiture en quelques clics</h1>
+        </div>
+    
+        <form action="{% url 'reservation_form' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Téléphone :</label>
+                    <input type="tel" id="telephone" name="telephone" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicule">Choisissez un véhicule :</label>
+                    <select id="vehicule" name="vehicule" required>
+                        {% for voiture in voitures %}
+                            <option value="{{ voiture.id }}">{{ voiture.marque }} {{ voiture.modele }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date-debut">Date de début :</label>
+                    <input type="date" id="date-debut" name="date-debut" required>
+                </div>
+                <div class="form-group">
+                    <label for="date-fin">Date de fin :</label>
+                    <input type="date" id="date-fin" name="date-fin" required>
+                </div>
+            </div>
+            <button type="submit">Réserver</button>
+        </form>
+    </section>
+    
+<!-- Fin Reservation -->
+
+
+
+
+
+
+     <!-- Rides -->
+      <section >
+        <div class="heading">
+            <span>Comment ça fonctionne</span>
+            <h1>Réservez en 3 étapes simples</h1>
+        </div>
+        <div class="ride-container">
+            <div class="box">
+                <i class="bx bxs-map-pin"></i> <!-- Icône pour l'emplacement -->
+                <h2>Choisissez un emplacement</h2>
+                <p>Sélectionnez votre ville ou l'agence de location la plus proche pour récupérer votre véhicule rapidement et facilement.</p>
+            </div>
+            <div class="box">
+                <i class="bx bxs-calendar-check"></i> <!-- Icône de calendrier -->
+                <h2>Définissez vos dates</h2>
+                <p>Choisissez la date et l'heure de prise en charge ainsi que la date de retour selon vos besoins.</p>
+            </div>
+            <div class="box">
+                <i class="bx bxs-car"></i> <!-- Icône de voiture -->
+                <h2>Réservez votre voiture</h2>
+                <p>Parcourez notre large gamme de véhicules et réservez en ligne en quelques clics en toute sécurité.</p>
+            </div>
+        </div>
+    </section>
+    
+
+  
+
+    <section class="services" id="services">
+        <div class="heading">
+            <span>Nos Meilleurs Services</span>
+            <h1>Découvrez Nos Offres Exceptionnelles <br> Avec Nos Partenaires de Confiance</h1>
+            <br>
+        </div>
+    
+        <div class="services-container">
+            {% for voiture in voitures %}
+                <div class="box">
+                    <div class="box-img">
+                        <img src="{{ voiture.image.url }}" alt="{{ voiture.marque }} {{ voiture.modele }}">
+                    </div>
+                    <p class="anne">{{ voiture.annee }}</p>
+                    <h3>{{ voiture.marque }} {{ voiture.modele }}</h3>
+                    <h2>${{ voiture.prix_jour }}/jour | ${{ voiture.prix_mois }} <span>/mois</span></h2>
+                    <!-- Lien vers la section de réservation avec data-id -->
+                    <a href="#reserve" class="btn" data-id="{{ voiture.id }}" onclick="selectCar(this)">Louer Maintenant</a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    
+    
+
+      <!-- À propos -->
+<section class="about" id="about">
+    <div class="heading">
+        <span>À Propos de Nous</span>
+        <h1>Une Expérience Client Inégalée</h1>
+    </div>
+    <div class="about-container">
+        <div class="about-img">
+            <img src="{% static 'images/prop1.avif' %}" alt="Notre entreprise">
+        </div>
+        <div class="about-text">
+            <span>Qui sommes-nous ?</span>
+            <p>Nous sommes une entreprise spécialisée dans la location de voitures, offrant un large choix de véhicules récents et bien entretenus pour répondre à tous vos besoins. Que vous soyez en voyage d'affaires, en vacances ou que vous ayez besoin d'une voiture pour une occasion spéciale, nous avons ce qu'il vous faut.</p>
+            <p>Notre mission est de vous garantir une expérience de location simple, rapide et sécurisée, avec des tarifs compétitifs et un service client de qualité. Nous mettons un point d'honneur à assurer la satisfaction de nos clients en proposant des véhicules fiables et un support disponible 24/7.</p>
+            <a href="#" class="btn">En savoir plus</a>
+        </div>
+    </div>
+</section>
+
+
+       <!-- Offres -->
+
+            <!-- Offres -->
+        <section class="offre" id="offre">
+            <div class="heading">
+                <span>Offres Spéciales et Promotions</span>
+                <h1>Profitez de nos offres exceptionnelles sur la location de véhicules :</h1>
+            </div>
+            <br>
+            <div class="offre-grid">
+                {% for offre in offres %}
+                    <div class="offre-card">
+                        <img src="{{ offre.image.url }}" alt="{{ offre.titre }}" class="offre-img">
+                        <h3>{{ offre.titre }}</h3>
+                        <p>{{ offre.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+    <br>
+         <!-- fin des offres -->
+
+
+<!-- Section Témoignages -->
+        <section class="reviews" id="reviews">
+            <div class="heading">
+                <span>Témoignages</span>
+                <h1>Ce que disent nos clients</h1>
+            </div>
+
+            <div class="reviews-container">
+                {% for temoin in temoignages %}
+                    <div class="box">
+                        <div class="rev-img">
+                            <img src="{{ temoin.image.url }}" alt="Avis client">
+                        </div>
+                        <h2>{{ temoin.nom }}</h2>
+                        <div class="stars">
+                            <!-- Boucle pour les étoiles pleines -->
+                            {% for i in "12345"|slice:":temoin.etoiles" %}
+                                <i class="bx bxs-star"></i>  <!-- Étoiles pleines -->
+                            {% endfor %}
+                            
+                            <!-- Vérification de l'étoile partielle -->
+                            {% if temoin.etoiles|divisibleby:1 %}
+                                <i class="bx bxs-star-half"></i>  <!-- Étoile partielle -->
+                            {% endif %}
+                        </div>
+                        <p>"{{ temoin.avis }}"</p>
+                    </div>
+                {% endfor %}
+            </div>
+            
+       
+            
+        </section>
+
+
+        {% comment %} <!-- Newsletter -->
+        <section class="newsletter">
+            <div class="heading">
+                <h2>Abonnez-vous à notre newsletter</h2>
+                <p>Recevez les dernières offres et actualités directement dans votre boîte de réception.</p>
+            </div>
+            <form class="newsletter-form">
+                <div class="input-group">
+                    <input type="email" name="email" id="newsletter-email" placeholder="Entrez votre email" required>
+                    <button type="submit" class="btn">S'abonner</button>
+                </div>
+            </form>
+        </section> {% endcomment %}
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <div class="heading">
+                <h2>Abonnez-vous à notre newsletter</h2>
+                <p>Recevez les dernières offres et actualités directement dans votre boîte de réception.</p>
+            </div>
+            <form class="newsletter-form" method="POST" action="">
+                {% csrf_token %}
+                <div class="input-group">
+                    {{ form.email }}  <!-- Le champ email du formulaire -->
+                    <button type="submit" class="btn">S'abonner</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Afficher les messages de succès ou d'erreur -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+
+        
+        <footer class="footer">
+            <div class="footer-container">
+                <!-- Section À propos -->
+                <div class="footer-section">
+                    <h3>À propos de MKG Location</h3>
+                    <p>MKG Location est une agence de location de voitures de confiance, offrant des véhicules de qualité pour tous vos besoins de déplacement. Découvrez notre flotte et réservez dès aujourd'hui !</p>
+                </div>
+        
+                <!-- Liens rapides -->
+                <div class="footer-section">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="#home">Accueil</a></li>
+                        <li><a href="#ride">Nos véhicules</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">À propos</a></li>
+                        <li><a href="#reviews">Avis clients</a></li>
+                    </ul>
+                </div>
+        
+                <!-- Coordonnées -->
+                <div class="footer-section">
+                    <h3>Contactez-nous</h3>
+                    <ul>
+                        <li><i class='bx bx-map'></i> 123 Rue de la Location, Paris, France</li>
+                        <li><a href="https://wa.me/22891827950" target="_blank"><i class='bx bx-phone'></i> +228 91 82 79 50</a></li>
+                        <li><a href="https://wa.me/22870018340" target="_blank"><i class='bx bx-phone'></i> +228 70 01 83 40</a></li>
+                        <li><i class='bx bx-envelope'></i> mkglocation524@gmail.com</li>
+                    </ul>
+                </div>
+        
+                <!-- Réseaux sociaux -->
+                <div class="footer-section">
+                    <h3>Suivez-nous</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class='bx bxl-facebook'></i></a>
+                        <a href="#"><i class='bx bxl-instagram'></i></a>
+                        <a href="#"><i class='bx bxl-twitter'></i></a>
+                        <a href="#"><i class='bx bxl-youtube'></i></a>
+                    </div>
+                </div>
+            </div>
+        
+            
+        </footer>
+
+
+        <script src="{% static 'js/main.js' %}"></script>
+
+
+        <script>
+            function selectCar(button) {
+                var carId = button.getAttribute("data-id");
+                var selectElement = document.getElementById("vehicule");
+        
+                for (var i = 0; i < selectElement.options.length; i++) {
+                    if (selectElement.options[i].value == carId) {
+                        selectElement.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        </script>
+        
+</body>
+</html>
