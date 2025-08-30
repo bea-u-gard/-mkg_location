@@ -224,12 +224,14 @@ header.section.fixed {
 }
 .ride-container {
     display: grid;
-    align-items: center; /* Centre verticalement les éléments dans chaque boîte */
-    justify-items: center; /* Centre horizontalement les éléments dans chaque boîte */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Utilise des colonnes flexibles */
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
-    text-align: center; /* Centre le texte à l'intérieur de chaque boîte */
+    text-align: center;
+
+    padding: 0 20px; /* <-- espace de 20px à gauche et à droite */
 }
 .ride-container .box{
     text-align: center;

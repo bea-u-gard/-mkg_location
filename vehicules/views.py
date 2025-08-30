@@ -364,20 +364,23 @@ def supprimer_abonne(request, id):
     return render(request, 'dashboard/abonnes/supprimer_abonne.html', {'abonne': abonne})
 # fin section dashboard Abonnes
 
-
 # section dashboard Connexion admin
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
 def custom_login(request):
     if request.method == 'POST':
-        password = request.POST.get('password')  # Récupérer le mot de passe saisi
-        if password == 'location':  # Vérifier si le mot de passe est correct
+        username = request.POST.get('username')  # Récupérer le nom d'utilisateur
+        password = request.POST.get('password')  # Récupérer le mot de passe
+
+        # Vérifier si username et password sont "location"
+        if username == 'location' and password == 'location':
             request.session['is_logged_in'] = True  # Stocker l'état de connexion dans la session
             return redirect('dashboard')  # Rediriger vers le tableau de bord
         else:
-            messages.error(request, 'Mot de passe incorrect.')  # Afficher un message d'erreur
-    return render(request, 'dashboard/authentification/login.html')  # Afficher la page de connexion
+            messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
+
+    return render(request, 'dashboard/authentification/login.html')  # Page de connexion
 
 from django.shortcuts import render
 
