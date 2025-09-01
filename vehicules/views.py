@@ -369,6 +369,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 def custom_login(request):
+    
     if request.method == 'POST':
         username = request.POST.get('username')  # Récupérer le nom d'utilisateur
         password = request.POST.get('password')  # Récupérer le mot de passe
