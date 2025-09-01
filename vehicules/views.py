@@ -374,7 +374,7 @@ def custom_login(request):
         password = request.POST.get('password')  # Récupérer le mot de passe
 
         # Vérifier si username et password sont "location"
-        if username == 'location' and password == 'location':
+        if username == 'Guillaume' and password == 'locationMKG2000':
             request.session['is_logged_in'] = True  # Stocker l'état de connexion dans la session
             return redirect('dashboard')  # Rediriger vers le tableau de bord
         else:

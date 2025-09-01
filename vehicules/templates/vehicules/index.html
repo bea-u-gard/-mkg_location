@@ -220,71 +220,179 @@
             opacity: 0.9;
         }
         
-        /* Slider */
-        .slider {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto 50px;
-            height: 400px;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
+        /* NOUVEAU STYLE POUR LE SLIDER PUBLICITAIRE */
+        .promo-section {
+            padding: 60px 0;
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
         }
         
-        .slide {
+        .promo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .promo-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            height: 400px;
+        }
+        
+        .promo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .promo-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .promo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .promo-card:hover .promo-image img {
+            transform: scale(1.05);
+        }
+        
+        .promo-overlay {
             position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .promo-content {
+            padding: 25px;
+        }
+        
+        .promo-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .promo-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .promo-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .promo-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        /* Lightbox pour l'affichage agrandi */
+        .lightbox {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.3s ease;
         }
         
-        .slide.active {
+        .lightbox.active {
+            display: flex;
             opacity: 1;
         }
         
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
         }
         
-        .slide-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+        .lightbox-img {
             width: 100%;
+            display: block;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+        
+        .lightbox-details {
             padding: 20px;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            color: var(--light);
+            text-align: center;
         }
         
-        .slide-nav {
+        .lightbox-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .lightbox-description {
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .close-lightbox {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
-        
-        .slide-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: var(--light);
+            top: 15px;
+            right: 15px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
             width: 40px;
             height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
             cursor: pointer;
-            transition: var(--transition);
+            z-index: 10;
+            transition: background 0.3s ease;
         }
         
-        .slide-btn:hover {
+        .close-lightbox:hover {
             background: var(--primary);
         }
         
@@ -696,6 +804,10 @@
             .hero h1 {
                 font-size: 36px;
             }
+            
+            .promo-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 768px) {
@@ -705,10 +817,6 @@
             
             .heading h1 {
                 font-size: 28px;
-            }
-            
-            .slider {
-                height: 300px;
             }
             
             .reservation-form {
@@ -732,6 +840,14 @@
                 border-radius: 4px;
                 padding: 15px;
             }
+            
+            .promo-card {
+                height: auto;
+            }
+            
+            .promo-image {
+                height: 200px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -743,8 +859,12 @@
                 font-size: 28px;
             }
             
-            .slider {
-                height: 250px;
+            .promo-content {
+                padding: 15px;
+            }
+            
+            .promo-title {
+                font-size: 20px;
             }
         }
     </style>
@@ -785,27 +905,46 @@
         </div>
     </section>
 
-    <!-- Slider Section -->
-    <section class="section">
-        <div class="container">
-            <div class="slider">
+    <!-- Nouvelle Section Publicité Améliorée -->
+    <section class="promo-section">
+        <div class="promo-container">
+            <div class="heading">
+                <span>Nos offres spéciales</span>
+                <h1>Découvrez nos promotions exclusives</h1>
+                <p>Profitez de nos offres limitées pour vivre une expérience de conduite exceptionnelle</p>
+            </div>
+            
+            <div class="promo-grid">
                 {% for slide in slides %}
-                <div class="slide {% if forloop.first %}active{% endif %}">
-                    <img src="{{ slide.image.url }}" alt="{{ slide.title }}">
-                    <div class="slide-content">
-                        <h2>{{ slide.title }}</h2>
-                        <p>{{ slide.description }}</p>
+                <div class="promo-card">
+                    <div class="promo-image" data-index="{{ forloop.counter0 }}">
+                        <img src="{{ slide.image.url }}" alt="{{ slide.title }}">
+                        <div class="promo-overlay">
+                            <h3>{{ slide.title }}</h3>
+                        </div>
+                    </div>
+                    <div class="promo-content">
+                        <h3 class="promo-title">{{ slide.title }}</h3>
+                        <p class="promo-description">{{ slide.description }}</p>
+                        <a href="#reservation" class="promo-btn">En savoir plus</a>
                     </div>
                 </div>
                 {% endfor %}
-                
-                <div class="slide-nav">
-                    <div class="slide-btn prev-btn">&#10094;</div>
-                    <div class="slide-btn next-btn">&#10095;</div>
-                </div>
             </div>
         </div>
     </section>
+
+    <!-- Lightbox pour afficher les images en grand -->
+    <div class="lightbox" id="lightbox">
+        <div class="close-lightbox">&times;</div>
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-img">
+            <div class="lightbox-details">
+                <h3 class="lightbox-title"></h3>
+                <p class="lightbox-description"></p>
+            </div>
+        </div>
+    </div>
 
     <!-- Reservation Section -->
     <section class="section reservation" id="reservation">
@@ -1069,27 +1208,58 @@
             });
         });
         
-        // Slider functionality
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.querySelector('.prev-btn');
-        const nextBtn = document.querySelector('.next-btn');
+        // Lightbox functionality for promo images
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('.lightbox-img');
+        const lightboxTitle = lightbox.querySelector('.lightbox-title');
+        const lightboxDescription = lightbox.querySelector('.lightbox-description');
+        const closeLightbox = lightbox.querySelector('.close-lightbox');
+        const promoImages = document.querySelectorAll('.promo-image');
         
-        function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
-            
-            currentSlide = index;
-            if (currentSlide >= slides.length) currentSlide = 0;
-            if (currentSlide < 0) currentSlide = slides.length - 1;
-            
-            slides[currentSlide].classList.add('active');
-        }
+        // Sample data - in a real scenario, this would come from your backend
+        const promoData = [
+            {% for slide in slides %}
+            {
+                title: "{{ slide.title }}",
+                description: "{{ slide.description }}",
+                image: "{{ slide.image.url }}"
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
         
-        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
-        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+        // Add click event to each promo image
+        promoImages.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                const data = promoData[index];
+                lightboxImg.src = data.image;
+                lightboxTitle.textContent = data.title;
+                lightboxDescription.textContent = data.description;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+            });
+        });
         
-        // Auto slide
-        setInterval(() => showSlide(currentSlide + 1), 5000);
+        // Close lightbox
+        closeLightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; // Re-enable scrolling
+        });
+        
+        // Close lightbox when clicking outside the content
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
         
         // Car selection in reservation form
         function selectCar(button) {
