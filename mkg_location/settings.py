@@ -26,10 +26,14 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = 'django-insecure-+qg=ejbfaqz1r30!%u2(dz3(=9i5nxs=g+o%b%#q+_jj8vg77s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['0.0.0.0', '192.168.1.76', '127.0.0.1', '192.168.0.102', '10.5.50.37', '192.168.1.84']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'mkg-location.onrender.com',  # ton domaine Render
+    'localhost',
+    '127.0.0.1'
+]
 
 
 
