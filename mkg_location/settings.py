@@ -26,7 +26,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = 'django-insecure-+qg=ejbfaqz1r30!%u2(dz3(=9i5nxs=g+o%b%#q+_jj8vg77s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['0.0.0.0', '192.168.1.76', '127.0.0.1', '192.168.0.102', '10.5.50.37', '192.168.1.84']
 ALLOWED_HOSTS = [
@@ -64,8 +64,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ROOT_URLCONF = 'mkg_location.urls'
 
