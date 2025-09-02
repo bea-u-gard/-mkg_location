@@ -307,6 +307,7 @@ from django.contrib import messages
 def liste_affiches(request):
     affiches = PromotionSlide.objects.all()
     return render(request, 'dashboard/affiche/liste_affiches.html', {'affiches': affiches})
+
 # Ajouter une nouvelle affiche publicitaire
 def ajouter_affiche(request):
     if request.method == 'POST':
